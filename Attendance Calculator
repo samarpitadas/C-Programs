@@ -1,0 +1,54 @@
+#include <stdio.h>
+struct attendance{
+    char subject[100];
+    int crd;
+    int hour;
+    int wk;
+    int att;
+};
+void read(struct attendance at[],int n){
+    for(int i=0;i<n;i++){
+        printf("SUBJECT %d\n",i+1);
+        printf("Enter name of subject: ");
+        scanf("%s",&at[i].subject);
+        while(getchar()!='\n');
+        printf("Enter credits: ");
+        scanf("%d",&at[i].crd);
+        printf("Enter number of hours of class per week: ");
+        scanf("%d",&at[i].hour);
+        printf("Enter total number of weeks in your semester: ");
+        scanf("%d",&at[i].wk);
+        printf("Enter number of hours of classes you missed: ");
+        scanf("%d",&at[i].att);
+    }
+}
+void display(struct attendance at[],int n){
+    int a;
+    int b;
+    float c,d;
+    int e;
+    printf("Maximum hours of classes you can miss and not get suspended ;)\n");
+    for(int i=0;i<n;i++){
+        a=at[i].wk*at[i].hour;
+        b=(int)a*0.25;
+        c=(float)at[i].att/a;
+        d=(1.0-c)*100.0;
+        e=(int)b-c;
+        printf("%d. %s: %d hours\n",i+1,at[i].subject,b);
+        if(d>=75.0){
+            printf("(You have %f percent attendance. You can miss %d more hours)\n",d,e);
+        }
+        else{
+            printf("(You have %f percent attendance. Don't miss any more classes)\n",d);
+        }
+    }
+}
+int main(){
+    printf("Enter number of subjects\n");
+    int n;
+    scanf("%d",&n);
+    struct attendance at[n];
+    read(at,n);
+    display(at,n);
+    return 0;
+}
